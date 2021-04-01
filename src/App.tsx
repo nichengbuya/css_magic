@@ -1,24 +1,46 @@
 import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import './App.scss';
+import {
+  BrowserRouter as Router,
+  Switch,
+  Route,
+  Link
+} from "react-router-dom";
+import Staggered from './component/staggered/staggered';
 
 function App() {
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <Router>
+        <div className="App">
+          <ul className="left">
+            <li>
+              <Link to="/staggered">staggered</Link>
+            </li>
+            <li>
+              <Link to="/about">About</Link>
+            </li>
+            <li>
+              <Link to="/dashboard">Dashboard</Link>
+            </li>
+          </ul>
+          <div className="right">
+            <Switch>
+
+              <Route exact path="/staggered">
+                <Staggered></Staggered>
+              </Route>
+              <Route path="/about">
+                {/* <About /> */}
+              </Route>
+              <Route path="/dashboard">
+                {/* <Dashboard /> */}
+              </Route>
+            </Switch>
+          </div>
+
+        </div>
+      </Router>
     </div>
   );
 }
