@@ -1,47 +1,68 @@
-import React from 'react';
+import React, { Suspense } from 'react';
 import './App.scss';
 import {
   BrowserRouter as Router,
-  Switch,
   Route,
-  Link
+  Redirect
 } from "react-router-dom";
 import Staggered from './component/staggered/staggered';
+import CyberPunk from './component/cyber-punk/cyber-punk';
+import NotFound from './component/not-found';
+import MyNavLink from './component/myNavLink';
+import CD from './component/cd';
+const routes = [
+  {
+    path: "/",
+    redirect: '/staggered',
+  },
+  {
+    path:'/staggered',
+    component: Staggered
+  },
+  {
+    path:'/cyber-punk',
+    component:CyberPunk
+  },
+  {
+    path:'/CD',
+    component:CD
+  }
 
+]
+
+const RouteWithSubRoutes = (route:any) => {
+  if (!route.path) return <Route component={NotFound} />
+  return (<Route
+      exact strict
+      path={route.path}
+      render={props => (
+          route.redirect ?
+              <Redirect push to={route.redirect} from={route.path}></Redirect> :
+              <route.component {...props} routes={route.routes} />
+      )}
+  />)
+}
 function App() {
+  const linkList = routes.map((l,i)=>
+    (
+      l.redirect?null:
+      <MyNavLink key={i} to={l.path}>{l.path.replace('/','')}</MyNavLink>)
+    )
   return (
-    <div className="App">
       <Router>
         <div className="App">
-          <ul className="left">
-            <li>
-              <Link to="/staggered">staggered</Link>
-            </li>
-            <li>
-              <Link to="/about">About</Link>
-            </li>
-            <li>
-              <Link to="/dashboard">Dashboard</Link>
-            </li>
-          </ul>
+          <div className="left">
+              {linkList}
+          </div>
           <div className="right">
-            <Switch>
-
-              <Route exact path="/staggered">
-                <Staggered></Staggered>
-              </Route>
-              <Route path="/about">
-                {/* <About /> */}
-              </Route>
-              <Route path="/dashboard">
-                {/* <Dashboard /> */}
-              </Route>
-            </Switch>
+          <Suspense fallback={<div>Loading...</div>}>
+                    {routes.map((route, i) => <RouteWithSubRoutes key={i} {...route} />)}
+          </Suspense>
           </div>
 
         </div>
       </Router>
-    </div>
+
   );
 }
 
