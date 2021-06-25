@@ -1,0 +1,84 @@
+#captcha {
+    display: block;
+    --width: 400px;
+    --height: 260px;
+    --puzzle-width: 60px;
+    --puzzle-height: 60px;
+    --offset-left: var(--width) * -1;
+    --moved: 0px;
+
+    width: var(--width);
+    height: var(--height);
+    background: url(https://images.unsplash.com/photo-1606787366850-de6330128bfc?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=2700&q=80);
+    background-size: cover;
+    background-position: center;
+    position: relative;
+    box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.3);
+
+    &::after,
+    &::before {
+        position: absolute;
+        content: "";
+        display: block;
+        width: inherit;
+        height: inherit;
+        background-position: inherit;
+        background-image: inherit;
+        background-size: inherit;
+        clip-path: path('M 280 100 L 300 100 C 300 80 320 80 320 100 L 340 100 L 340 120 C 360 120 360 140 340 140 L 340 160 L 280 160 L 280 140 C 300 140 300 120 280 120 L 280 100');
+    }
+
+    &::after {
+        transform: translateX(clamp(
+            calc( var(--width) * -1),
+            calc( (var(--width) * -1) + var(--moved) ),
+            calc( var(--puzzle-width))
+        ));
+        transition: .25s all ease-in-out;
+    }
+    &::before{
+        background-color: rgba(0,0,0,.6);
+        box-shadow: inset 5px 5px 5px #ffffff;
+        background-blend-mode: multiply;
+    }
+    &:active::after {
+        transition: none;
+      }
+    #handle{
+        width:calc( var(--width) + var(--puzzle-width) * 2);
+        height:30px;
+        border-radius: 18px;
+        background:#eee;
+        position:absolute;
+        bottom:-50px;
+        left: calc( var(--puzzle-width) * -2);
+        box-shadow: inset 0px 0px 12px rgba(0, 0, 0,.2);
+        border: 3px solid #ccc;
+        span{
+            display: block;
+            background-color: #fff;
+            width:var(--puzzle-width);
+            height:inherit;
+            border-radius:inherit;
+            box-shadow: inset 0px 0px 6px rgba(0, 0, 0,.25), 0px 2px 4px rgba(0, 0, 0, 0.3);
+            position: absolute;
+            cursor: move;
+            transform: translateX(
+                clamp(
+                    0px,
+                    var(--moved),
+                    calc( var(--width) + var(--puzzle-width))
+                )
+            );
+            transition: .25s all ease-in-out;
+            &:active{
+                transition:none;
+            }
+        }
+    }
+}
+#captcha.passed::before,
+#captcha.passed::after,
+#captcha.passed #handle {
+  opacity: 0;
+}

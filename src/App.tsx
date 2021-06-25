@@ -10,6 +10,7 @@ import CyberPunk from './component/cyber-punk/cyber-punk';
 import NotFound from './component/not-found';
 import MyNavLink from './component/myNavLink';
 import CD from './component/cd';
+import Captcha from './component/captcha';
 const routes = [
   {
     path: "/",
@@ -26,6 +27,10 @@ const routes = [
   {
     path:'/CD',
     component:CD
+  },
+  {
+    path:'/captcha',
+    component:Captcha
   }
 
 ]
