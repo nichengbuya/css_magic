@@ -11,6 +11,8 @@ import NotFound from './component/not-found';
 import MyNavLink from './component/myNavLink';
 import CD from './component/cd';
 import Captcha from './component/captcha';
+import AppleA13 from './component/apple-a13';
+import IphoneSE from './component/iphone-se';
 const routes = [
   {
     path: "/",
@@ -31,6 +33,14 @@ const routes = [
   {
     path:'/captcha',
     component:Captcha
+  },
+  {
+    path:'/apple-a13',
+    component:AppleA13
+  },
+  {
+    path:'/iphone-se',
+    component:IphoneSE
   }
 
 ]

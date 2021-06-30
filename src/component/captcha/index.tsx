@@ -1,5 +1,6 @@
 import { useEffect } from "react"
 import './style.scss';
+import img from '../../assets/southpark.jpg';
 export default function Captcha() {
 
     useEffect(() => {
@@ -11,21 +12,19 @@ export default function Captcha() {
         button.addEventListener('mousedown', (e) => {
             shouldMove = true
         })
-
-        window.addEventListener('mousemove', (e) => {
+        const moveHandle = (e: MouseEvent) => {
             if (shouldMove) {
                 const offsetLeft = handle.getBoundingClientRect().left
                 const buttonWidth = button.getBoundingClientRect().width
-
                 captcha.style.setProperty('--moved', `${e.clientX - offsetLeft - buttonWidth / 2}px`)
             }
-        })
-
-        window.addEventListener('mouseup', (e) => {
+        }
+        window.addEventListener('mousemove', moveHandle)
+        const upHandle = (e: MouseEvent) => {
             if (shouldMove) {
                 const finalOffset = e.clientX - handle.getBoundingClientRect().left
 
-                if (finalOffset >= 430 && finalOffset <= 450) {
+                if (finalOffset >= 420 && finalOffset <= 440) {
                     // pass
                     captcha.classList.add('passed')
                 } else {
@@ -35,17 +34,22 @@ export default function Captcha() {
 
                 shouldMove = false
             }
-        })
-        return ()=>{
-            
         }
-    },[])
+        window.addEventListener('mouseup', upHandle)
+        return () => {
+            window.removeEventListener('mousemove', moveHandle)
+            window.removeEventListener('mouseup', upHandle)
+        }
+    }, [])
 
     return (
-        <div id="captcha">
-            <div id="handle">
-                <span></span>
+        <div className="background">
+            <div id="captcha" style={{ background: `url(${img})`, backgroundSize: 'cover' }}>
+                <div id="handle">
+                    <span></span>
+                </div>
             </div>
         </div>
+
     )
 }
