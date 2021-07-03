@@ -11,8 +11,9 @@ import NotFound from './component/not-found';
 import MyNavLink from './component/myNavLink';
 import CD from './component/cd';
 import Captcha from './component/captcha';
-import AppleA13 from './component/apple-a13';
 import IphoneSE from './component/iphone-se';
+import AppleMac from './component/apple-mac';
+import AppleA13 from './component/apple-a13';
 const routes = [
   {
     path: "/",
@@ -35,12 +36,16 @@ const routes = [
     component:Captcha
   },
   {
-    path:'/apple-a13',
-    component:AppleA13
+    path:'/apple-mac',
+    component:AppleMac
   },
   {
     path:'/iphone-se',
     component:IphoneSE
+  },
+  {
+    path:'/iphone-a13',
+    component:AppleA13
   }
 
 ]
