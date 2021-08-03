@@ -14,6 +14,7 @@ import Captcha from './component/captcha';
 import IphoneSE from './component/iphone-se';
 import AppleMac from './component/apple-mac';
 import AppleA13 from './component/apple-a13';
+import LoadBar from './component/load-bar';
 const routes = [
   {
     path: "/",
@@ -46,6 +47,10 @@ const routes = [
   {
     path:'/iphone-a13',
     component:AppleA13
+  },
+  {
+    path:'/load-bar',
+    component:LoadBar
   }
 
 ]
